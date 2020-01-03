@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 # 整个项目的名称
-project(tinykvdb)
+project(tinykvdb VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -14,6 +14,9 @@ set(TINYKVDB_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(TINYKVDB_INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(TINYKVDB_INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 
+set(EXTERN_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/deps_install/include)
+set(EXTERN_LIB_PATH ${PROJECT_SOURCE_DIR}/deps_install/lib)
+
 # src里面的子模块的头文件搜索路径
 # set(TINYKVDB_HEADERS_DIR ${PROJECT_SOURCE_DIR}/src/division)
 # message("PROJECT_SOURCE_DIR is : ${PROJECT_SOURCE_DIR}")
@@ -22,6 +25,10 @@ set(TINYKVDB_INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 
 # include_directories(${TINYKVDB_INSTALL_INCLUDE_DIR})
 # include_directories(${TINYKVDB_HEADERS_DIR})
+
+# add external libraries
+# 暂时还是一个一个编译吧...
+# include(deps/deps.cmake)
 
 add_subdirectory(src)
 add_subdirectory(test)

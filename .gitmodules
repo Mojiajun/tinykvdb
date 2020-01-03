@@ -1,4 +1,8 @@
-[submodule "googletest"]
-  path = test/lib/googletest
-  url = https://github.com/google/googletest.git
-  branch = master
+[submodule "deps/glog"]
+	path = deps/glog
+	url = https://github.com/google/glog.git
+	ignore = dirty
+[submodule "deps/googletest"]
+	path = deps/googletest
+	url = https://github.com/google/googletest.git
+	ignore = dirty

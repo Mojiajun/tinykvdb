@@ -53,3 +53,9 @@ include/*
 lib/*
 bin/*
 test/test_runner
+
+## 生成的log
+/log
+
+## 依赖库暂时安放的位置
+deps_install
