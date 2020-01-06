@@ -1,32 +1,34 @@
-#ifndef PROJECT_SERVER_H
-#define PROJECT_SERVER_H
+#ifndef TINYKVDB_SRC_DB_H_
+#define TINYKVDB_SRC_DB_H_
 
 #include <string>
-#include <unordered_map>
 
 namespace tinykvdb {
 
-class kvdb {
+class Kvdb {
  public:
-  //static bool Open(kvdb **dbptr, const std::string &dbname);
-  // 这里要设成引用吗?
-  kvdb(std::string dbname) : dbname_(dbname) {
+  // TODO, ?要不要用 = default, 感觉没区别啊
+  Kvdb() { }
+  virtual ~Kvdb() { }
 
-  }
+  Kvdb(const Kvdb&) = delete;
+  Kvdb& operator=(const Kvdb&) = delete;
 
-  ~kvdb() {
+  // TODO, 这里要设成引用吗?
+  // TODO, 加入Option
+  static bool Open(const std::string &dbname, Kvdb **dbptr);
 
-  }
+  /// Put(key, value)把key, value存入db
+  virtual bool Put(const std::string &key, const std::string &value) = 0;
 
-  void Put(const std::string &key, const std::string &value);
-  std::string Get(const std::string &key) const;
-  void Delete(const std::string &key);
+  /// Put(key, value)把key, value存入db
+  /// 这里返回的值放入*value, 函数返回值为bool, API尽量与 Put(), Delete()一致.
+  virtual bool Get(const std::string &key, std::string *value) = 0;
 
- private:
-   std::unordered_map<std::string, std::string> records_;
-   std::string dbname_;
+  /// Put(key, value)把key, value存入db
+  virtual bool Delete(const std::string &key) = 0;
 };
 
-}
+}  // namespace tinykvdb
 
-#endif  // PROJECT_SERVER_H
+#endif  // TINYKVDB_SRC_DB_H_

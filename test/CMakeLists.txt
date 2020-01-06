@@ -24,7 +24,7 @@ endif()
 
 
 set(DIVIDER_TEST_SOURCE_FILES main.cpp divider_tests.cpp)
-set(DB_TEST_SOURCE_FILES main.cpp db_test.cpp ../src/db.cpp)
+set(ENV_TEST_SOURCE_FILES main.cpp env_test.cpp ../src/env.cpp)
 
 
 find_library (
@@ -42,16 +42,16 @@ if (NOT GLOG_LIB)
 endif()
 
 add_executable(divider_tests ${DIVIDER_TEST_SOURCE_FILES})
-add_executable(db_tests ${DB_TEST_SOURCE_FILES})
+add_executable(env_test ${ENV_TEST_SOURCE_FILES})
 
 target_link_libraries(divider_tests
         division  # 这种情况会因为在src/CMakeLists.txt里有add_subdirectory(division), 所以能链接上
         # 但是这一步还没安装啊?whyTODO
         ${GTEST_LIB})
 
-target_link_libraries(db_tests
+target_link_libraries(env_test
         ${GLOG_LIB}
         ${GTEST_LIB})
 
 install(TARGETS divider_tests DESTINATION bin)
-install(TARGETS db_tests DESTINATION bin)
+install(TARGETS env_test DESTINATION bin)
