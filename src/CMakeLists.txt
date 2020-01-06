@@ -3,7 +3,7 @@ project(tinykvdb_server)
 
 # 自己会去编译
 add_subdirectory(division)
-set(SOURCE_FILES server.cpp)
+set(SOURCE_FILES db.cpp)
 
 message(${EXTERN_INCLUDE_PATH})
 include_directories(${EXTERN_INCLUDE_PATH})
@@ -23,9 +23,9 @@ if (NOT GLOG_LIB)
     message(SEND_ERROR "Did not find libglog")
 endif()
 
-add_executable(tinykvdb_server ${SOURCE_FILES})
+#add_executable(tinykvdb_server ${SOURCE_FILES})
 
-target_link_libraries(tinykvdb_server
-        ${GLOG_LIB})
+#target_link_libraries(tinykvdb_server
+#        ${GLOG_LIB})
 
-install(TARGETS tinykvdb_server DESTINATION ${TINYKVDB_INSTALL_BIN_DIR})
+#install(TARGETS tinykvdb_server DESTINATION ${TINYKVDB_INSTALL_BIN_DIR})

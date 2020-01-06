@@ -1,8 +1,9 @@
 //
 // Created by Konstantin Gredeskoul on 5/16/17.
 //
-#include "../src/division/division.h"
+
 #include "gtest/gtest.h"
+#include "../src/division/division.h"
 
 using namespace std;
 

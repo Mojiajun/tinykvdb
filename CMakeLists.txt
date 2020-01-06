@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.2)
 # 整个项目的名称
 project(tinykvdb VERSION 0.0.1)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 # CMAKE_INSTALL_PREFIX 类似./configure --prefix里的prefix
 # 在本项目为了测试, 只是安装到了PROJECT_SOURCE_DIR
