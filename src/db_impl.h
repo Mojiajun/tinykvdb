@@ -11,8 +11,8 @@
 
 #include "db.h"
 #include "index.h"
-
-class File;
+// ???为什么用前向声明不行...然后发送一个函数匹配问题...感觉是给的信息不够多.然后又让push_back(std::move)这个push_back函数进行函数匹配
+#include "file.h"
 
 namespace tinykvdb {
 
@@ -33,12 +33,14 @@ class KvdbImpl : public Kvdb {
 
   static const int MAX_FILES = 10;
  private:
+  friend Kvdb;
 
   std::string dbname_;
   std::vector<std::unique_ptr<File>> data_files_;
   std::vector<std::unique_ptr<File>> index_files_;
   std::set<Index> tables_;
   uint32_t max_file_;
+  uint32_t cursor_;
 };
 
 }  // namespace tinykvdb

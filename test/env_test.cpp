@@ -28,7 +28,7 @@ class EnvTest : public ::testing::Test {
 TEST_F(EnvTest, GetCurrentDir) {
     std::string res;
     env::GetCurrentDir(res);
-    LOG(INFO) << res;
+    //LOG(INFO) << res;
 }
 
 TEST_F(EnvTest, FileExist) {

@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.2)
 project(tinykvdb_server)
 
 # 自己会去编译
-add_subdirectory(division)
 set(SOURCE_FILES db.cpp)
 
 message(${EXTERN_INCLUDE_PATH})
