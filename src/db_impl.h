@@ -38,7 +38,7 @@ class KvdbImpl : public Kvdb {
   std::string dbname_;
   std::vector<std::unique_ptr<File>> data_files_;
   std::vector<std::unique_ptr<File>> index_files_;
-  std::set<Index> tables_;
+  std::set<Index, IndexCmp> tables_;
   uint32_t max_file_;
   uint32_t cursor_;
 };

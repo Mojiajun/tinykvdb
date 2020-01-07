@@ -23,8 +23,9 @@ if (NOT GTEST_LIB)
 endif()
 
 
-set(ENV_TEST_SOURCE_FILES main.cpp env_test.cpp ../src/env.cpp)
-set(DB_TEST_SOURCE_FILES main.cpp db_test.cpp ../src/db_impl.cpp ../src/env.cpp)
+set(ENV_TEST_SOURCE_FILES main.cpp env_test.cpp)
+set(DB_TEST_SOURCE_FILES main.cpp db_test.cpp)
+set(FILE_TEST_SOURCE_FILES main.cpp file_test.cpp)
 
 
 find_library (
@@ -43,13 +44,21 @@ endif()
 
 add_executable(env_test ${ENV_TEST_SOURCE_FILES})
 add_executable(db_test ${DB_TEST_SOURCE_FILES})
+add_executable(file_test ${FILE_TEST_SOURCE_FILES})
 
 target_link_libraries(env_test
+        tinykvdb
         ${GLOG_LIB}
         ${GTEST_LIB})
 
 target_link_libraries(db_test
+        tinykvdb
+        ${GTEST_LIB})
+
+target_link_libraries(file_test
+        tinykvdb
         ${GTEST_LIB})
 
 install(TARGETS db_test DESTINATION bin)
 install(TARGETS env_test DESTINATION bin)
+install(TARGETS file_test DESTINATION bin)

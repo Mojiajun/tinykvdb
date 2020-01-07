@@ -71,7 +71,7 @@ std::unique_ptr<Kvdb> Kvdb::Open(const std::string &dbname,
     // 打开数据文件
     for (int i = 0; i < KvdbImpl::MAX_FILES; ++i) {
         std::string data_file = data_dir + DataFileName + std::to_string(i);
-        std::unique_ptr<File> res = env::Newfile(data_file);
+        std::unique_ptr<File> res = File::Newfile(data_file);
         if (!res) {
             *status = false;
             return dbptr;
@@ -83,7 +83,7 @@ std::unique_ptr<Kvdb> Kvdb::Open(const std::string &dbname,
     // 打开index files
     for (int i = 0; i < KvdbImpl::MAX_FILES; ++i) {
         std::string index_file = data_dir + IndexFileName + std::to_string(i);
-        std::unique_ptr<File> res = env::Newfile(index_file);
+        std::unique_ptr<File> res = File::Newfile(index_file);
         if (!res) {
             *status = false;
             return dbptr;

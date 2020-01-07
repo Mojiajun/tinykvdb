@@ -5,25 +5,11 @@
 #include "env.h"
 
 #include <sys/stat.h>  // ::mkdir, ::stat
-#include <sys/fcntl.h>
 #include <unistd.h>
 
 namespace tinykvdb {
 
 namespace env {
-
-std::unique_ptr<File> Newfile(const std::string &filename) {
-    int32_t fd = ::open(filename.c_str(), O_RDWR | O_CREAT | O_APPEND, 0645);
-    if (fd < 0) {
-        return std::unique_ptr<File>(nullptr);
-    } else {
-        uint64_t offset;
-        if (!GetFileSize(filename, &offset)) {
-            return std::unique_ptr<File>(nullptr);
-        }
-        return std::make_unique<File>(fd);
-    }
-}
 
 bool CreateDir(const std::string &dirname) {
     // 如果制造目录成功, 返回0

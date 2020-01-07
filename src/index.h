@@ -44,13 +44,18 @@ class Index {
       value_size_ = 0;
   }
 
-
  private:
   std::string key_;
   uint32_t file_index_;
   uint64_t file_offset_;
   uint32_t key_size_;
   uint32_t value_size_;
+};
+
+struct IndexCmp {
+  bool operator()(const Index &lhs, const Index &rhs) const {
+      return lhs.Key() < rhs.Key();
+  }
 };
 
 }  // namespace tinykvdb
