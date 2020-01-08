@@ -48,6 +48,7 @@ include/divisible/*
 .idea/*.xml
 
 build/**/*
+mac-build
 
 include/*
 lib/*

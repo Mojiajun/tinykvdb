@@ -14,8 +14,21 @@ set(TINYKVDB_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(TINYKVDB_INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(TINYKVDB_INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 
-set(EXTERN_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/deps_install/include)
-set(EXTERN_LIB_PATH ${PROJECT_SOURCE_DIR}/deps_install/lib)
+# -- PROJECT_SOURCE_DIR is [/tmp/tmp.QCfAIMZXp8]
+# -- STATUS  加了有什么用? 就多了一个--
+message(STATUS "PROJECT_SOURCE_DIR is " [${PROJECT_SOURCE_DIR}])
+
+#add_custom_command(OUTPUT
+#        COMMAND echo "Generating log.txt file..."
+#        COMMAND echo "welcome"
+#        COMMENT  "This is a test"
+#        )
+#add_custom_target(T1 ALL DEPENDS ${LOG})
+
+set(EXTERN_INCLUDE_PATH ~/.tinykvdb_deps/include)
+set(EXTERN_LIB_PATH ~/.tinykvdb_deps/lib)
+
+include_directories(${EXTERN_INCLUDE_PATH})
 
 # src里面的子模块的头文件搜索路径
 # set(TINYKVDB_HEADERS_DIR ${PROJECT_SOURCE_DIR}/src/division)

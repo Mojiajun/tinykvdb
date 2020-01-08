@@ -8,8 +8,8 @@ set(SOURCE_FILES
         file.cpp
         coding.cpp)
 
-message(${EXTERN_INCLUDE_PATH})
-include_directories(${EXTERN_INCLUDE_PATH})
+message(STATUS "EXTERN_INCLUDE_PATH is " ${EXTERN_INCLUDE_PATH})
+message(STATUS "EXTERN_LIB_PATH is " ${EXTERN_LIB_PATH})
 # link_directories(${EXTERN_LIB_PATH})
 
 find_library (
