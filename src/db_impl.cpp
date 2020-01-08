@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <utility>
+#include "glog/logging.h"
 #include "env.h"
 #include "file.h"
 
@@ -23,21 +24,23 @@ KvdbImpl::~KvdbImpl() {}
 bool KvdbImpl::Put(const std::string &key, const std::string &value) {
     uint32_t cursor = cursor++;
     uint32_t file_index = (cursor & (max_file_ - 1));
-    File* data_file = data_files_[file_index].get();
     uint64_t file_offset;
-    bool ok = data_file->AppendData(key, value, &file_offset);
+    bool ok = data_files_[file_index]->AppendData(key, value, &file_offset);
     if (ok) {
-        File *index_file = index_files_[file_index].get();
-        ok = index_file->AppendIndex(key, file_index, file_offset,
+        ok = index_files_[file_index]->AppendIndex(key, file_index, file_offset,
             key.size(), value.size());
-        if (ok) {
-            Index index(key, file_index, file_offset, key.size(), value.size());
-            tables_.insert(index);
+        if (!ok) {
+            LOG(FATAL) << "KvdbImpl::Put() call AppendIndex fail";
         }
+        Index index(key, file_index, file_offset, key.size(), value.size());
+        tables_.insert(index);
     }
+    return true;
 }
 
 bool KvdbImpl::Get(const std::string &key, std::string *value) {
+    //Index search_index(key);
+    //tables_.find(search_index);
 
 }
 
@@ -89,7 +92,7 @@ std::unique_ptr<Kvdb> Kvdb::Open(const std::string &dbname,
             return dbptr;
         }
         // 这里用emplace_back会出什么问题吗?
-        impl->data_files_.push_back(std::move(res));
+        impl->index_files_.push_back(std::move(res));
     }
     dbptr = std::move(impl);
     *status = true;

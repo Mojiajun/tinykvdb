@@ -12,7 +12,6 @@ namespace tinykvdb {
 
 namespace env {
 
-std::unique_ptr<File> Newfile(const std::string &filename);
 bool GetCurrentDir(std::string &dir);
 bool IsFileOrDirExist(const std::string &filepath);
 bool CreateDir(const std::string &dirname);

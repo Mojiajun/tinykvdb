@@ -14,6 +14,9 @@ class Index {
  public:
   Index() { }
 
+  Index(const std::string &key) :
+    key_(key) { }
+
   Index(const std::string &key, uint32_t file_index, uint64_t file_offset, uint32_t key_size, uint32_t value_size) :
     key_(key),
     file_index_(file_index),

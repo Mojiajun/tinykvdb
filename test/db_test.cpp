@@ -5,17 +5,26 @@
 #include "../src/db.h"
 
 #include <memory>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 
-using tinykvdb::Kvdb;
 using namespace tinykvdb;
 
 class DbTest : public ::testing::Test {
  public:
-  DbTest() : db_() { }
 
- protected:
-  Kvdb *db_;
+  DbTest() : db_() {
+      bool status = false;
+      // 这里是不是得用个std::move()?
+      db_ = tinykvdb::Kvdb::Open("testdb", &status);
+      if (!status) {
+          LOG(FATAL) << "Kvdb::Open() fail in DbTest()";
+      }
+      LOG(INFO) << "DbTest() 构造成功";
+  }
+
+ public:
+  std::unique_ptr<Kvdb> db_;
 
   virtual void SetUp() {
   };
@@ -23,10 +32,10 @@ class DbTest : public ::testing::Test {
   virtual void TearDown() {
   };
 
-  //bool Put(const std::string &key, const std::string &value) {
-  //    db_->Put(key, value);
-  //    return true;
-  //}
+  bool Put(const std::string &key, const std::string &value) {
+      bool status = db_->Put(key, value);
+      return status;
+  }
 
   //bool Delete(const std::string &key) {
   //    db_->Delete(key);
@@ -34,17 +43,23 @@ class DbTest : public ::testing::Test {
   //}
 
   //std::string Get(const std::string &key) {
-  //    return db_->Get(key);
+  //    std::string value;
+  //    return db_->Get(key, &value);
   //}
 };
 
 //TEST_F(DbTest, Empty) {
-//    //ASSERT_EQ(db_ != nullptr);
+//    ASSERT_TRUE(!db_);
 //    ASSERT_EQ("NOT_FOUND", Get("key"));
 //}
 //
+TEST_F(DbTest, Write) {
+    ASSERT_TRUE(db_);
+    ASSERT_EQ(true, Put("key_01", "value_01"));
+}
+//
 //TEST_F(DbTest, ReadWrite) {
-//    //ASSERT_EQ(db_ != nullptr);
+//    ASSERT_TRUE(!db_);
 //    ASSERT_EQ(true, Put("key_01", "value_01"));
 //    ASSERT_EQ("value_01", Get("key_01"));
 //    ASSERT_EQ(true, Put("key_02", "value_02"));
@@ -54,6 +69,7 @@ class DbTest : public ::testing::Test {
 //}
 //
 //TEST_F(DbTest, WriteDelete) {
+//    ASSERT_TRUE(!db_);
 //    ASSERT_EQ(true, Put("key_01", "value_01"));
 //    ASSERT_EQ("value_01", Get("key_01"));
 //    ASSERT_EQ(true, Put("key_01", "value_02"));
@@ -61,9 +77,9 @@ class DbTest : public ::testing::Test {
 //    ASSERT_EQ(true, Delete("key_01"));
 //    ASSERT_EQ("NOT_FOUND", Get("key_01"));
 //}
-
-TEST_F(DbTest, Open) {
-    const std::string dbname = "testdb";
-    bool status;
-    std::unique_ptr<Kvdb> kvdb_ptr = tinykvdb::Kvdb::Open(dbname, &status);
-}
+//
+//TEST_F(DbTest, Open) {
+//    const std::string dbname = "testdb";
+//    bool status;
+//    std::unique_ptr<Kvdb> kvdb_ptr = tinykvdb::Kvdb::Open(dbname, &status);
+//}

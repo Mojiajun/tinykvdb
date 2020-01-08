@@ -64,6 +64,7 @@ bool File::AppendIndex(const std::string &key,
                        uint32_t key_size,
                        uint32_t value_size) {
 
+    return false;
 }
 
 }  // namespace tinykvdb
