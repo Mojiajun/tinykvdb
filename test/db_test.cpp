@@ -64,6 +64,7 @@ TEST_F(DbTest, WriteAndRead) {
     std::string value;
     bool readStatus = Get(key, &value);
     ASSERT_EQ(readStatus, true);
+    LOG(INFO) << "value is " << value;
     ASSERT_EQ(value, "value_02");
 }
 //
