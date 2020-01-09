@@ -42,10 +42,9 @@ class DbTest : public ::testing::Test {
   //    return true;
   //}
 
-  //std::string Get(const std::string &key) {
-  //    std::string value;
-  //    return db_->Get(key, &value);
-  //}
+  bool Get(const std::string &key, std::string *value) {
+      return db_->Get(key, value);
+  }
 };
 
 //TEST_F(DbTest, Empty) {
@@ -56,6 +55,16 @@ class DbTest : public ::testing::Test {
 TEST_F(DbTest, Write) {
     ASSERT_TRUE(db_);
     ASSERT_EQ(true, Put("key_01", "value_01"));
+}
+
+TEST_F(DbTest, WriteAndRead) {
+    ASSERT_TRUE(db_);
+    const std::string key = "key_02";
+    ASSERT_EQ(true, Put(key, "value_02"));
+    std::string value;
+    bool readStatus = Get(key, &value);
+    ASSERT_EQ(readStatus, true);
+    ASSERT_EQ(value, "value_02");
 }
 //
 //TEST_F(DbTest, ReadWrite) {

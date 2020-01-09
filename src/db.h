@@ -25,6 +25,7 @@ class Kvdb {
 
   /// Put(key, value)把key, value存入db
   /// 这里返回的值放入*value, 函数返回值为bool, API尽量与 Put(), Delete()一致.
+  // TODO, 换成引用不行吗?
   virtual bool Get(const std::string &key, std::string *value) = 0;
 
   /// Put(key, value)把key, value存入db

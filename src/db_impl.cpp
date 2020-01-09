@@ -33,14 +33,16 @@ bool KvdbImpl::Put(const std::string &key, const std::string &value) {
             LOG(FATAL) << "KvdbImpl::Put() call AppendIndex fail";
         }
         Index index(key, file_index, file_offset, key.size(), value.size());
-        tables_.insert(index);
+        tables_[key] = index;
     }
     return true;
 }
 
 bool KvdbImpl::Get(const std::string &key, std::string *value) {
     //Index search_index(key);
-    //tables_.find(search_index);
+    //tables_.find(search_index);  // 需要通过key找到Index
+    // 直接把tables_改成map算了.
+    // 然后通过Index去磁盘读取实际的value
 
 }
 

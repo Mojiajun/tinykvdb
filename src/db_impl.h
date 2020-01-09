@@ -6,7 +6,7 @@
 
 #include <cstdint>  // uint32_t 需要吗?
 #include <memory>
-#include <set>
+#include <map>
 #include <vector>
 
 #include "db.h"
@@ -38,7 +38,7 @@ class KvdbImpl : public Kvdb {
   std::string dbname_;
   std::vector<std::unique_ptr<File>> data_files_;
   std::vector<std::unique_ptr<File>> index_files_;
-  std::set<Index, IndexCmp> tables_;
+  std::map<std::string, Index> tables_;
   uint32_t max_file_;
   uint32_t cursor_;
 };
