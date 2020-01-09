@@ -33,6 +33,11 @@ class File {
                    uint32_t key_size,
                    uint32_t value_size);
 
+  /// 从File.fd_的文件偏移为fileoffset的位置读取datasize字节数据到buf
+  bool Read(char *buf, uint64_t fileoffset, uint32_t datasize);
+
+  uint64_t FileOffset() const { return file_offset_; }
+
  private:
   int fd_;
   uint64_t file_offset_ = 0;

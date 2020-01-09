@@ -35,7 +35,7 @@ bool File::AppendData(const std::string &key,
     uint32_t data_size = key.size() + value.size();
     char data_buf[data_size];
     EncodeData(data_buf, key, value);
-    LOG(INFO) << "File::AppendData() data_buf prepare to write disk is "<< data_buf;
+    LOG(INFO) << "File::AppendData() data_buf prepare to write disk is " << data_buf;
 
     *file_offset_out = file_offset_;
     file_offset_ += data_size;
@@ -75,7 +75,7 @@ bool File::AppendIndex(const std::string &key,
                 value_size);
     // 最后的这个index_buf没打印出来.和AppendData在这里不同,why?
     // TODO, 这里感觉得写个单元测试, 确保写入文件是正确的
-    LOG(INFO) << "File::AppendIndex() index_buf prepare to write disk is "<< index_buf;
+    LOG(INFO) << "File::AppendIndex() index_buf prepare to write disk is " << index_buf;
 
     uint64_t pre_offset = file_offset_;
     file_offset_ += index_size;
@@ -98,6 +98,23 @@ bool File::AppendIndex(const std::string &key,
     }
 
     return cnt != -1;
+}
+
+bool File::Read(char *buf, uint64_t fileoffset, uint32_t datasize) {
+    // TODO, 验证fileoffset的有效性的更完备的代码
+    assert(fileoffset <= file_offset_);
+    // TODO, pread要放循环里吗? 如果一次读不完的话
+    size_t readSize = pread(fd_,
+                            buf,
+                            datasize,
+                            fileoffset);
+
+    if(readSize < 0) {
+        return false;
+        LOG(ERROR) << "File::Read() read file fail.";
+    }
+    LOG(INFO) << "File::Read()读取成功" << ", 读取到[" << readSize << "]字节";
+    return true;
 }
 
 }  // namespace tinykvdb

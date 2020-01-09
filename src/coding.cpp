@@ -11,8 +11,12 @@ namespace tinykvdb {
 void EncodeData(char *buf,
                 const std::string &key,
                 const std::string &value) {
+    // 如果用std::string::c_str(), 会不对...why
+    // test_key_02test_value_02���
     memcpy(buf, key.c_str(), key.size());
     memcpy(buf + key.size(), value.c_str(), value.size());
+    //memcpy(buf, key.data(), key.size());
+    //memcpy(buf + key.size(), value.data(), value.size());
 }
 
 // 暂时先这样, API设计的感觉不好
@@ -46,6 +50,12 @@ void EncodeIndex(char *buf,
     pos += key_size;
     // The size of value
     memcpy(buf + pos, &value_size, sizeof(uint32_t));
+}
+
+
+void DecodeData(char *buf, uint32_t key_size, uint32_t value_size, std::string *value) {
+    // 得加个value_size尺寸参数, 不然会多东西
+    *value = std::string(buf + key_size, value_size);
 }
 
 }  // namespace tinykvdb

@@ -59,4 +59,4 @@ test/test_runner
 /log
 
 ## 依赖库暂时安放的位置
-deps_install
+cmake-build-debugremote

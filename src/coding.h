@@ -19,6 +19,9 @@ void EncodeIndex(char* buf,
                  uint32_t key_size,
                  uint32_t value_size);
 
+/// 输入在buf里, 里面包含了key+value, 从里面解码, 把值保存在value里面
+void DecodeData(char *buf, uint32_t key_size, uint32_t value_size, std::string *value);
+
 }  // namespace tinykvdb
 
 #endif //TINYKVDB_SRC_CODING_H_

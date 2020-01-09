@@ -28,7 +28,7 @@ bool KvdbImpl::Put(const std::string &key, const std::string &value) {
     bool ok = data_files_[file_index]->AppendData(key, value, &file_offset);
     if (ok) {
         ok = index_files_[file_index]->AppendIndex(key, file_index, file_offset,
-            key.size(), value.size());
+                                                   key.size(), value.size());
         if (!ok) {
             LOG(FATAL) << "KvdbImpl::Put() call AppendIndex fail";
         }
@@ -39,11 +39,28 @@ bool KvdbImpl::Put(const std::string &key, const std::string &value) {
 }
 
 bool KvdbImpl::Get(const std::string &key, std::string *value) {
-    //Index search_index(key);
-    //tables_.find(search_index);  // 需要通过key找到Index
-    // 直接把tables_改成map算了.
-    // 然后通过Index去磁盘读取实际的value
-
+//    Index search_index = tables_[key];
+//    if (search_index.KeySize() == 0 && search_index.ValueSize() == 0) {
+//        *value = "";
+//        return false;
+//    }
+//    char buf[search_index.DataSize()];
+//    // 通过Index去磁盘读取实际的数据
+//    bool ok = data_files_[search_index.FileIndex()]->Read(buf,
+//                                                          search_index.FileOffset(),
+//                                                          search_index.DataSize());
+//    bool ret;
+//    if (ok) {
+//        // 对数据解码
+//        DecodeData(buf,
+//                   search_index.KeySize(),
+//                   search_index.ValueSize(),
+//                   value);
+//        ret = true;
+//    } else {
+//        ret = false;
+//    }
+//    return ret;
 }
 
 bool KvdbImpl::Delete(const std::string &key) {

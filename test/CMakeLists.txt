@@ -42,11 +42,13 @@ endif ()
 set(ENV_TEST_SOURCE_FILES main.cpp env_test.cpp)
 set(DB_TEST_SOURCE_FILES main.cpp db_test.cpp)
 set(FILE_TEST_SOURCE_FILES main.cpp file_test.cpp)
+set(CODING_TEST_SOURCE_FILES main.cpp coding_test.cpp)
 
 # 第2处添加位置
 add_executable(env_test ${ENV_TEST_SOURCE_FILES})
 add_executable(db_test ${DB_TEST_SOURCE_FILES})
 add_executable(file_test ${FILE_TEST_SOURCE_FILES})
+add_executable(coding_test ${CODING_TEST_SOURCE_FILES})
 
 set(TEST_SRC_LINK
         tinykvdb
@@ -84,6 +86,11 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
             -Wl,--start-group
             ${TEST_SRC_LINK}
             -Wl,--end-group)
+
+    target_link_libraries(coding_test
+            -Wl,--start-group
+            ${TEST_SRC_LINK}
+            -Wl,--end-group)
 elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
         MESSAGE(STATUS "linking in ${CMAKE_SYSTEM_NAME} platform")
         target_link_libraries(env_test
@@ -92,12 +99,15 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
                 ${TEST_SRC_LINK})
         target_link_libraries(file_test
                 ${TEST_SRC_LINK})
+        target_link_libraries(coding_test
+                ${TEST_SRC_LINK})
 endif(CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 # 第4处添加位置
 set(TEST_INSTALL_BIN
         db_test
         env_test
-        file_test)
+        file_test
+        coding_test)
 
 install(TARGETS ${TEST_INSTALL_BIN} DESTINATION bin)
